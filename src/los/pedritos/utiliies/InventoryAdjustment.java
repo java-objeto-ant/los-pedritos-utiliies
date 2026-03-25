@@ -70,7 +70,7 @@ public class InventoryAdjustment {
             System.exit(1);
         }
         
-        if (!saveTransaction("2025-03-31")){ //importante itong date
+        if (!saveTransaction("2026-03-25")){ //importante itong date
             logwrapr.severe("Unable to save trancsaction.");
             System.exit(1);
         }
