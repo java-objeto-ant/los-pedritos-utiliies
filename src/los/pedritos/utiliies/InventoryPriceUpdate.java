@@ -47,9 +47,9 @@ public class InventoryPriceUpdate {
         } else {
             System.out.println("Config file loaded successfully.");
         }
-        instance = new GRider("General");
+        instance = new GRider("gRider");
 
-        if (!instance.logUser("General", "M001111122")) { //fsUserID: should be the runner's ID in xxxSysUser
+        if (!instance.logUser("gRider", "M001111122")) { //fsUserID: should be the runner's ID in xxxSysUser
             logwrapr.severe(instance.getMessage() + instance.getErrMsg());
             System.exit(1);
         }
@@ -57,7 +57,7 @@ public class InventoryPriceUpdate {
         //start of process
         
         //check the file if exists
-        File fsFile = new File("d:/PriceAdjustment.xlsx");
+        File fsFile = new File("d:/Price Change Final.xlsx");
         
         if (!fsFile.exists()){
             logwrapr.severe("File does not exist.");
@@ -74,7 +74,6 @@ public class InventoryPriceUpdate {
     }
         
     public static boolean processAdjustment(File fsFile) {
-
         if (fsFile != null) {
             if (!fsFile.getPath().endsWith(".xlsx")) {
                 fsFile = new File(fsFile.getPath() + ".xlsx");
@@ -183,7 +182,7 @@ public class InventoryPriceUpdate {
                             ", sDescript" +
                             ", nUnitPrce" +
                         " FROM Inventory" +
-                        " WHERE sStockIDx = " + SQLUtil.toSQL(sBarCodex);
+                        " WHERE sBarCodex = " + SQLUtil.toSQL(sBarCodex);
         
         try {
             ResultSet rs = instance.executeQuery(lsSQL);
@@ -199,11 +198,14 @@ public class InventoryPriceUpdate {
         String lsSQL = "UPDATE Inventory SET" +
                             "  nUnitPrce = " + SQLUtil.toSQL(nUnitPrce) +
                             ", nSelPrice = " + SQLUtil.toSQL(nUnitPrce) +
+                            ", dPricexxx = '2026-03-30'" +
+                            ", sModified = " + SQLUtil.toSQL(instance.getUserID()) +
                             ", dModified = " + SQLUtil.toSQL(instance.getServerDate()) +
-                        " WHERE sStockIDx = " + SQLUtil.toSQL(sBarCodex);
+                        " WHERE sBarCodex = " + SQLUtil.toSQL(sBarCodex);
         
                 
         try {
+            System.out.println(lsSQL);
             if (instance.executeQuery(lsSQL, "Inventory", instance.getBranchCode(), "") <= 0){
                 System.out.println("No rows updated");
                 return false;
