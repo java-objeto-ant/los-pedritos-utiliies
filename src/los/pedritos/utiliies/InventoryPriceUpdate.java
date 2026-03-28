@@ -258,5 +258,5 @@ public class InventoryPriceUpdate {
             ex.printStackTrace();
             return false;
         }
-    }
+    }//
 }
